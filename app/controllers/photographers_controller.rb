@@ -1,7 +1,7 @@
 class PhotographersController <ApplicationController 
    
     def index
-        photographers = Photographers.all 
+        photographers = Photographer.all 
         render json: photographers
     end
 

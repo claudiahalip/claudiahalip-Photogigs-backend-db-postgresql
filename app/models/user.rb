@@ -1,5 +1,8 @@
 class User < ApplicationRecord
     has_many :photographers, dependent: :destroy
+    has_many :reviews, dependent: :
+
+
     has_secure_password 
 
     validates :username, presence: true
