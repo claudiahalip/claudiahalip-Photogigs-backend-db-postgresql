@@ -2,13 +2,13 @@ class PhotographersController <ApplicationController
    
     def index
         photographers = Photographer.all 
-        render json: photographers
+        render json: {photographers: photographers}
     end
 
     def show
         photographer = Photographers.find(params[:id])
         if @photographer
-            render json: photographer
+            render json: {photographer: photographer}
         else
             render json: "no photographer found"
         end
@@ -17,7 +17,7 @@ class PhotographersController <ApplicationController
     def create 
         photographer = Photographer.new(photographer_params)
         if photographer.save
-            render json: photographer
+            render json: {photographer: photographer}
         else
             render json: {error: "Your list couldn't be added!Please try again"}
         end
