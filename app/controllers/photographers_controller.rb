@@ -6,7 +6,7 @@ class PhotographersController <ApplicationController
     end
 
     def show
-        photographer = Photographers.find(params[:id])
+        photographer = Photographer.find(params[:id])
         if @photographer
             render json: {photographer: photographer}
         else
