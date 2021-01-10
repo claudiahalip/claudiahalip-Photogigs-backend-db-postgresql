@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-    has_many :photographers, dependent: :destroy
-    has_many :reviews, dependent: :destroy
 
 
     has_secure_password 

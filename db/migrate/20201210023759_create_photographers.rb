@@ -7,8 +7,6 @@ class CreatePhotographers < ActiveRecord::Migration[6.0]
       t.string :city
       t.string :state
       t.string :image
-      t.references :user, null: false, foreign_key: true
-
       t.timestamps
     end
   end

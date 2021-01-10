@@ -22,20 +22,16 @@ ActiveRecord::Schema.define(version: 2020_12_11_170654) do
     t.string "city"
     t.string "state"
     t.string "image"
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_photographers_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.text "content"
-    t.bigint "user_id", null: false
     t.bigint "photographer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["photographer_id"], name: "index_reviews_on_photographer_id"
-    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,7 +42,5 @@ ActiveRecord::Schema.define(version: 2020_12_11_170654) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "photographers", "users"
   add_foreign_key "reviews", "photographers"
-  add_foreign_key "reviews", "users"
 end
