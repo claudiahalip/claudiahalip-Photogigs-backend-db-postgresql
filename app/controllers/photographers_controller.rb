@@ -1,14 +1,17 @@
 class PhotographersController <ApplicationController 
    
     def index
-        photographers = Photographer.all 
-        render json: photographers, include: [:reviews]
-    end
+        photographers = Photographer.all.with_attached_featured_image 
+        render json: photographers.map { |photographer|
+        photographer.as_json.merge({image: url_for(photographer.avatar)})
+        }
 
     def show
         photographer = Photographer.find(params[:id])
+        avatar= rails_blob_path(photographer.avatar)
+        url = url_for(photographer.avatar) 
         if @photographer
-            render json: photographer
+            render json: { photographer: photographer, image: avatar, url: url}
         else
             render json: "no photographer found"
         end
