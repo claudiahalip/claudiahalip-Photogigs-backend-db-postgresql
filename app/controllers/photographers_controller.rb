@@ -1,10 +1,15 @@
 class PhotographersController <ApplicationController 
    
     def index
-        photographers = Photographer.all.with_attached_featured_image 
+        photographers = Photographer.all.with_attached_avatar
         render json: photographers.map { |photographer|
-        photographer.as_json.merge({image: url_for(photographer.avatar)})
+            if photographer.avatar.attached?
+                photographer.as_json.merge({image: url_for(photographer.avatar)}) 
+            else
+                photographer
+            end
         }
+    end
 
     def show
         photographer = Photographer.find(params[:id])
@@ -26,12 +31,16 @@ class PhotographersController <ApplicationController
         end
     end
 
+    def update
+        photographer = Photographer.find(params[:id])
+        photographer.update(avatar: params[:avatar])
+        avatar_url = rails_blob_path(photographer.avatar)
+        render json: {photographer: photographer, image: avatar_url}
+    end
+
     private
 
     def photographer_params
         params.require(:photographer).permit(:name, :website, :years_of_experience, :city, :state, :image)
     end
-
-
-
 end

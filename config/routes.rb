@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'logged_in', to: 'sessions#is_logged_in?'
 
   resources :users, only: [:create, :show, :index]
-  resources :photographers, only: [:create, :show, :index]
   resources :reviews, only: [:create, :show, :index]
+  resources :photographers
+  # photographer 'rails/active_storage/direct_uploads', to: 'direct_uploads#create' 
 end
