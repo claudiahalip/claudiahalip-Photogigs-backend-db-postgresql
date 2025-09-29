@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
     def index 
-        reviews = Review.all 
+        reviews = Review.includes(:photographer).all
         render json: reviews, include: [:photographer]
     end
 
@@ -10,16 +10,16 @@ class ReviewsController < ApplicationController
         if review 
             render json: review, include: [:photographer]
         else
-            render json: "no review found"
+            render json: "no review found", status: :not_found
         end
     end
 
     def create
         review = Review.new(review_params)
         if review.save
-            render json: review, include: [:photographer]
+            render json: review, include: [:photographer], status: :created
         else
-            render json: {error: "Your review couldn't be added!Please try again"}
+            render json: {error: "Your review couldn't be added!Please try again"}, status: :unprocessable_entity
         end
     end
 
