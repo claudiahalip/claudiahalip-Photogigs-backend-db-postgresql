@@ -12,14 +12,15 @@ class PhotographersController <ApplicationController
     end
 
     def show
-        photographer = Photographer.find(params[:id])
-        avatar= rails_blob_path(photographer.avatar)
-        url = url_for(photographer.avatar) 
-        if @photographer
-            render json: { photographer: photographer, image: avatar, url: url}
-        else
-            render json: "no photographer found"
-        end
+        @photographer = Photographer.find(params[:id])
+  
+        render json: {
+            photographer: @photographer,
+            image: @photographer.avatar.attached? ? rails_blob_path(@photographer.avatar) : nil,
+            url: @photographer.avatar.attached? ? url_for(@photographer.avatar) : nil
+        }
+        rescue ActiveRecord::RecordNotFound
+        render json: { error: "Photographer not found" }, status: :not_found
     end 
 
     def create 
